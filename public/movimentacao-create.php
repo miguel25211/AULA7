@@ -1,97 +1,215 @@
-<?php
-
-require __DIR__ . '/../vendor/autoload.php';
-
-?>
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Cadastrar Movimentação</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .cabecalho {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .icone {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        h1 {
+            color: #0f172a;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitulo {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .campo {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #334155;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            background: #f8fafc;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .botoes {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .botao {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .voltar {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .cadastrar {
+            background: #2563eb;
+            color: white;
+        }
+
+        .obrigatorio {
+            color: #ef4444;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 25px 20px;
+            }
+
+            .botoes {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+    <div class="container">
 
-    <div class="card shadow">
+        <div class="card">
 
-        <div class="card-body">
+            <div class="cabecalho">
 
-            <h1 class="mb-4">
-                Cadastrar Movimentação
-            </h1>
+                <div class="icone">
+                    💰
+                </div>
+
+                <h1>Nova Movimentação</h1>
+
+                <p class="subtitulo">
+                    Cadastre uma nova entrada ou saída
+                </p>
+
+            </div>
 
             <form action="movimentacao-cadastrar.php" method="POST">
 
-                <div class="mb-3">
+                <div class="campo">
 
-                    <label class="form-label">
-                        Descrição
+                    <label for="descricao">
+                        Descrição <span class="obrigatorio">*</span>
                     </label>
 
                     <input
                         type="text"
+                        id="descricao"
                         name="descricao"
-                        class="form-control"
-                        maxlength="255"
-                        required
-                    >
+                        placeholder="Ex: Compra de materiais"
+                        required>
 
                 </div>
 
+                <div class="campo">
 
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Valor
+                    <label for="valor">
+                        Valor <span class="obrigatorio">*</span>
                     </label>
 
                     <input
                         type="number"
+                        id="valor"
                         name="valor"
-                        class="form-control"
+                        placeholder="0.00"
                         step="0.01"
-                        min="0"
-                        required
-                    >
+                        min="0.01"
+                        required>
 
                 </div>
 
+                <div class="campo">
 
-                <div class="mb-3">
-
-                    <label class="form-label">
-                        Tipo
+                    <label for="tipo">
+                        Tipo <span class="obrigatorio">*</span>
                     </label>
 
-                    <select
-                        name="tipo"
-                        class="form-select"
-                        required
-                    >
+                    <select id="tipo" name="tipo" required>
 
                         <option value="">
-                            Selecione
+                            Selecione uma opção
                         </option>
 
-                        <option value="Entrada">
+                        <option value="entrada">
                             Entrada
                         </option>
 
-                        <option value="Saída">
+                        <option value="saida">
                             Saída
                         </option>
 
@@ -99,44 +217,41 @@ require __DIR__ . '/../vendor/autoload.php';
 
                 </div>
 
+                <div class="campo">
 
-                <div class="mb-4">
-
-                    <label class="form-label">
-                        Data
+                    <label for="data">
+                        Data <span class="obrigatorio">*</span>
                     </label>
 
                     <input
                         type="date"
+                        id="data"
                         name="data"
-                        class="form-control"
-                        required
-                    >
+                        required>
 
                 </div>
 
+                <div class="botoes">
 
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Cadastrar
-                </button>
+                    <a
+                        href="movimentacao-list.php"
+                        class="botao voltar">
+                        Voltar
+                    </a>
 
-                <a
-                    href="index.php"
-                    class="btn btn-secondary"
-                >
-                    Voltar
-                </a>
+                    <button
+                        type="submit"
+                        class="botao cadastrar">
+                        Cadastrar
+                    </button>
+
+                </div>
 
             </form>
 
         </div>
 
     </div>
-
-</div>
 
 </body>
 
