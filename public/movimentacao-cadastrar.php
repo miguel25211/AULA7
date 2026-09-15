@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$descricao = trim($_POST['descricao'] ?? '');
+$descriçao = trim($_POST['descricao'] ?? '');
 $valor = $_POST['valor'] ?? '';
 $tipo = $_POST['tipo'] ?? '';
 $data = $_POST['data'] ?? '';
