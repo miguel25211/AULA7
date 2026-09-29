@@ -21,7 +21,7 @@ class MovimentacaoDAO
         $credito = 0;
         $debito = 0;
 
-        if ($movimentacao->getTipo() === 'Entrada') {
+        if (strtolower($movimentacao->getTipo()) === 'entrada') {
             $credito = $movimentacao->getValor();
         } else {
             $debito = $movimentacao->getValor();
@@ -63,7 +63,11 @@ class MovimentacaoDAO
 
     public function listar(): array
     {
-        $sql = "SELECT * FROM movimentacao ORDER BY id DESC";
+        $sql = "
+            SELECT *
+            FROM movimentacao
+            ORDER BY id DESC
+        ";
 
         $stmt = $this->conexao->prepare($sql);
         $stmt->execute();

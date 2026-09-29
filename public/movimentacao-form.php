@@ -49,7 +49,7 @@ try {
         .card-header {
             background-color: #0d6efd;
             color: white;
-            padding: 20px;
+            padding: 22px;
         }
 
         .card-header h3 {
@@ -67,10 +67,6 @@ try {
             padding: 10px;
         }
 
-        .input-group-text {
-            border-radius: 8px 0 0 8px;
-        }
-
         .btn {
             border-radius: 8px;
             padding: 10px 20px;
@@ -86,13 +82,10 @@ try {
 
     <div class="card shadow">
 
-        <!-- CABEÇALHO -->
 
         <div class="card-header">
 
-            <h3>
-                Nova Movimentação
-            </h3>
+            <h3>Nova Movimentação</h3>
 
             <small>
                 Cadastre uma entrada ou saída financeira.
@@ -101,7 +94,7 @@ try {
         </div>
 
 
-        <!-- FORMULÁRIO -->
+    
 
         <div class="card-body p-4">
 
@@ -110,7 +103,6 @@ try {
                 method="POST"
             >
 
-                <!-- PESSOA -->
 
                 <div class="mb-3">
 
@@ -134,9 +126,7 @@ try {
 
                         <?php foreach ($pessoas as $pessoa): ?>
 
-                            <option
-                                value="<?= htmlspecialchars($pessoa['id']) ?>"
-                            >
+                            <option value="<?= $pessoa['id'] ?>">
                                 <?= htmlspecialchars($pessoa['nome']) ?>
                             </option>
 
@@ -147,7 +137,7 @@ try {
                 </div>
 
 
-                <!-- DATA -->
+              
 
                 <div class="mb-3">
 
@@ -169,7 +159,7 @@ try {
                 </div>
 
 
-                <!-- DESCRIÇÃO -->
+                
 
                 <div class="mb-3">
 
@@ -193,7 +183,6 @@ try {
                 </div>
 
 
-                <!-- TIPO -->
 
                 <div class="mb-3">
 
@@ -228,7 +217,7 @@ try {
                 </div>
 
 
-                <!-- VALOR -->
+              
 
                 <div class="mb-4">
 
@@ -263,13 +252,13 @@ try {
 
                 <!-- BOTÕES -->
 
-                <div class="d-flex gap-2">
+                <div class="d-flex justify-content-between">
 
                     <a
                         href="movimentacao-list.php"
                         class="btn btn-secondary"
                     >
-                        Cancelar
+                        ← Voltar
                     </a>
 
                     <button

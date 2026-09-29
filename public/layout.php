@@ -1,112 +1,199 @@
 <?php
 
-ob_start();
+if (!isset($content)) {
+    $content = '';
+}
+
 ?>
 
-<div class="mb-4">
-    <h3 class="page-title mb-1">Nova movimentação</h3>
-    <p class="page-subtitle mb-0">
-        Cadastre uma entrada ou saída financeira.
-    </p>
-</div>
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<div class="card">
-    <div class="card-body p-4">
+<head>
 
-        <form action="movimentacao-create.php" method="POST">
+    <meta charset="UTF-8">
 
-            <div class="row g-3">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-                <div class="col-md-6">
-                    <label class="form-label">Pessoa</label>
+    <title>Sistema Financeiro</title>
 
-                    <select name="pessoa_id" class="form-select" required>
-                        <option value="">Selecione...</option>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-                        <?php foreach ($pessoas as $pessoa): ?>
-                            <option value="<?= $pessoa['id'] ?>">
-                                <?= htmlspecialchars($pessoa['nome']) ?>
-                            </option>
-                        <?php endforeach; ?>
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet"
+    >
 
-                    </select>
-                </div>
+    <style>
 
-                <div class="col-md-6">
-                    <label class="form-label">Data</label>
+        body {
+            background-color: #f5f6fa;
+        }
 
-                    <input
-                        type="date"
-                        name="data"
-                        class="form-control"
-                        value="<?= date('Y-m-d') ?>"
-                        required>
-                </div>
+        .sidebar {
+            min-height: 100vh;
+            background-color: #212529;
+        }
 
-                <div class="col-md-8">
-                    <label class="form-label">Descrição</label>
+        .sidebar .nav-link {
+            color: #fff;
+            padding: 12px 15px;
+        }
 
-                    <input
-                        type="text"
-                        name="descricao"
-                        class="form-control"
-                        placeholder="Ex.: Salário mensal"
-                        required>
-                </div>
+        .sidebar .nav-link:hover {
+            background-color: #343a40;
+        }
 
-                <div class="col-md-4">
-                    <label class="form-label">Tipo</label>
+        .page-content {
+            padding: 30px;
+        }
 
-                    <select name="tipo" class="form-select" required>
-                        <option value="">Selecione...</option>
-                        <option value="entrada">Entrada</option>
-                        <option value="saida">Saída</option>
-                    </select>
-                </div>
+        .page-title {
+            font-weight: 600;
+        }
 
-                <div class="col-md-4">
-                    <label class="form-label">Valor</label>
+        .page-subtitle {
+            color: #6c757d;
+        }
 
-                    <div class="input-group">
-                        <span class="input-group-text">R$</span>
+        .menu-title {
+            color: #adb5bd;
+            font-size: 12px;
+            text-transform: uppercase;
+            padding: 20px 15px 5px;
+        }
 
-                        <input
-                            type="number"
-                            name="valor"
-                            class="form-control"
-                            step="0.01"
-                            min="0"
-                            placeholder="0,00"
-                            required>
-                    </div>
-                </div>
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <!-- MENU LATERAL -->
+
+        <aside class="col-md-3 col-lg-2 sidebar p-0">
+
+            <!-- LOGO -->
+
+            <div class="p-4 text-white">
+
+                <h4>
+
+                    <i class="bi bi-wallet2"></i>
+
+                    Financeiro
+
+                </h4>
 
             </div>
 
-            <div class="d-flex justify-content-end gap-2 mt-4">
+
+            <nav class="nav flex-column">
+
+                <!-- INÍCIO -->
+
+                <a
+                    href="index.php"
+                    class="nav-link"
+                >
+
+                    <i class="bi bi-house me-2"></i>
+
+                    Início
+
+                </a>
+
+
+                <!-- PESSOAS -->
+
+                <div class="menu-title">
+                    Pessoas
+                </div>
+
+                <a
+                    href="pessoa-list.php"
+                    class="nav-link"
+                >
+
+                    <i class="bi bi-people me-2"></i>
+
+                    Lista de Pessoas
+
+                </a>
+
+                <a
+                    href="pessoa-create.php"
+                    class="nav-link"
+                >
+
+                    <i class="bi bi-person-plus me-2"></i>
+
+                    Registrar Pessoa
+
+                </a>
+
+
+                <!-- MOVIMENTAÇÕES -->
+
+                <div class="menu-title">
+                    Movimentações
+                </div>
 
                 <a
                     href="movimentacao-list.php"
-                    class="btn btn-light">
-                    Cancelar
+                    class="nav-link"
+                >
+
+                    <i class="bi bi-arrow-left-right me-2"></i>
+
+                    Movimentações
+
                 </a>
 
-                <button
-                    type="submit"
-                    class="btn btn-primary">
-                    <i class="bi bi-check-lg me-1"></i>
-                    Salvar
-                </button>
+                <a
+                    href="movimentacao-form.php"
+                    class="nav-link"
+                >
 
-            </div>
+                    <i class="bi bi-plus-circle me-2"></i>
 
-        </form>
+                    Nova movimentação
+
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- CONTEÚDO -->
+
+        <main class="col-md-9 col-lg-10 page-content">
+
+            <?= $content ?>
+
+        </main>
 
     </div>
+
 </div>
 
-<?php
 
-$content = ob_get_clean();
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+>
+</script>
 
-include 'layout.php';
+</body>
+
+</html>

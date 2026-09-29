@@ -18,7 +18,9 @@ try {
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Lista de Movimentações</title>
@@ -27,137 +29,271 @@ try {
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
+
+    <style>
+
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            max-width: 1100px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #0d6efd;
+            color: white;
+            padding: 20px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .card-header small {
+            opacity: 0.9;
+        }
+
+        .table {
+            vertical-align: middle;
+        }
+
+        .table th {
+            white-space: nowrap;
+        }
+
+        .entrada {
+            color: #198754;
+            font-weight: bold;
+        }
+
+        .saida {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .valor {
+            font-weight: 600;
+        }
+
+        .btn {
+            border-radius: 8px;
+        }
+
+        .btn-nova {
+            background-color: white;
+            color: #0d6efd;
+            border: none;
+        }
+
+        .btn-nova:hover {
+            background-color: #f0f0f0;
+            color: #0a58ca;
+        }
+
+        .empty {
+            padding: 30px;
+            text-align: center;
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container mt-5">
+<div class="container py-5">
 
     <div class="card shadow">
 
-        <div class="card-body">
+        <!-- CABEÇALHO -->
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="card-header">
 
-                <h1 class="mb-0">
-                    Lista de Movimentações
-                </h1>
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h3>
+                        Lista de Movimentações
+                    </h3>
+
+                    <small>
+                        Consulte as entradas e saídas cadastradas.
+                    </small>
+
+                </div>
 
                 <a
                     href="movimentacao-create.php"
-                    class="btn btn-primary"
+                    class="btn btn-nova"
                 >
-                    Nova Movimentação
+                    + Nova Movimentação
                 </a>
 
             </div>
+
+        </div>
+
+
+        <!-- CONTEÚDO -->
+
+        <div class="card-body p-4">
 
             <?php if (count($movimentacoes) > 0): ?>
 
                 <div class="table-responsive">
 
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-hover">
 
                         <thead class="table-dark">
 
                             <tr>
+
                                 <th>ID</th>
+
                                 <th>Descrição</th>
+
                                 <th>Valor</th>
+
                                 <th>Tipo</th>
+
                                 <th>Data</th>
+
                             </tr>
 
                         </thead>
 
                         <tbody>
 
-                            <?php foreach ($movimentacoes as $movimentacao): ?>
+                        <?php foreach ($movimentacoes as $movimentacao): ?>
 
-                                <tr>
+                            <?php
 
-                                    <!-- ID -->
-                                    <td>
-                                        <?= htmlspecialchars($movimentacao['id']) ?>
-                                    </td>
+                            $credito = $movimentacao['Credito'] ?? 0;
+                            $debito = $movimentacao['Debito'] ?? 0;
 
-                                    <!-- DESCRIÇÃO -->
-                                    <td>
-                                        <?= htmlspecialchars($movimentacao['descricao']) ?>
-                                    </td>
+                            ?>
 
-                                    <!-- VALOR -->
-                                    <td>
+                            <tr>
 
-                                        <?php
+                                <!-- ID -->
 
-                                        $credito = $movimentacao['Credito'] ?? 0;
-                                        $debito = $movimentacao['Debito'] ?? 0;
+                                <td>
+                                    <?= htmlspecialchars($movimentacao['id']) ?>
+                                </td>
 
-                                        if ($credito > 0) {
 
-                                            echo 'R$ ' . number_format(
+                                <!-- DESCRIÇÃO -->
+
+                                <td>
+                                    <?= htmlspecialchars($movimentacao['descricao']) ?>
+                                </td>
+
+
+                                <!-- VALOR -->
+
+                                <td class="valor">
+
+                                    <?php if ($credito > 0): ?>
+
+                                        <span class="entrada">
+
+                                            + R$
+
+                                            <?= number_format(
                                                 $credito,
                                                 2,
                                                 ',',
                                                 '.'
-                                            );
+                                            ) ?>
 
-                                        } else {
+                                        </span>
 
-                                            echo 'R$ ' . number_format(
+                                    <?php elseif ($debito > 0): ?>
+
+                                        <span class="saida">
+
+                                            - R$
+
+                                            <?= number_format(
                                                 $debito,
                                                 2,
                                                 ',',
                                                 '.'
-                                            );
+                                            ) ?>
 
-                                        }
+                                        </span>
 
-                                        ?>
+                                    <?php else: ?>
 
-                                    </td>
+                                        R$ 0,00
 
-                                    <!-- TIPO -->
-                                    <td>
+                                    <?php endif; ?>
 
-                                        <?php
+                                </td>
 
-                                        if ($credito > 0) {
-                                            echo 'Entrada';
-                                        } else {
-                                            echo 'Saída';
-                                        }
 
-                                        ?>
+                                <!-- TIPO -->
 
-                                    </td>
+                                <td>
 
-                                    <!-- DATA -->
-                                    <td>
+                                    <?php if ($credito > 0): ?>
 
-                                        <?php
+                                        <span class="entrada">
+                                            Entrada
+                                        </span>
 
-                                        if (!empty($movimentacao['DataOperacao'])) {
+                                    <?php elseif ($debito > 0): ?>
 
-                                            echo date(
-                                                'd/m/Y',
-                                                strtotime($movimentacao['DataOperacao'])
-                                            );
+                                        <span class="saida">
+                                            Saída
+                                        </span>
 
-                                        } else {
+                                    <?php else: ?>
 
-                                            echo '-';
+                                        -
 
-                                        }
+                                    <?php endif; ?>
 
-                                        ?>
+                                </td>
 
-                                    </td>
 
-                                </tr>
+                                <!-- DATA -->
 
-                            <?php endforeach; ?>
+                                <td>
+
+                                    <?php
+
+                                    if (!empty($movimentacao['DataOperacao'])) {
+
+                                        echo date(
+                                            'd/m/Y',
+                                            strtotime(
+                                                $movimentacao['DataOperacao']
+                                            )
+                                        );
+
+                                    } else {
+
+                                        echo '-';
+
+                                    }
+
+                                    ?>
+
+                                </td>
+
+                            </tr>
+
+                        <?php endforeach; ?>
 
                         </tbody>
 
@@ -167,18 +303,31 @@ try {
 
             <?php else: ?>
 
-                <div class="alert alert-warning">
-                    Nenhuma movimentação cadastrada.
+                <div class="alert alert-warning empty">
+
+                    <h5>Nenhuma movimentação cadastrada.</h5>
+
+                    <p class="mb-0">
+                        Clique em "Nova Movimentação" para cadastrar uma.
+                    </p>
+
                 </div>
 
             <?php endif; ?>
 
-            <a
-                href="index.php"
-                class="btn btn-secondary"
-            >
-                Voltar para Início
-            </a>
+
+            <!-- BOTÃO VOLTAR -->
+
+            <div class="mt-3">
+
+                <a
+                    href="index.php"
+                    class="btn btn-secondary"
+                >
+                    ← Voltar para Início
+                </a>
+
+            </div>
 
         </div>
 
